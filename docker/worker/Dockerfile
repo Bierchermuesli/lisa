@@ -1,4 +1,4 @@
-FROM python:3.6-slim
+FROM python:3.11-slim
 
 ARG maxmind_key
 
@@ -9,7 +9,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     make \
     patch \
     git \
-    qemu \
     qemu-system \
     openvpn \
     binutils \

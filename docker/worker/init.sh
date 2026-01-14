@@ -15,7 +15,7 @@ if [ -n "${VPN}" ]; then
 fi
 
 echo "ip addr"
-ip addr
+/usr/bin/ip addr
 
 echo "/etc/hosts"
 cat /etc/hosts

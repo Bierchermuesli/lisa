@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Table, Button } from "antd";
+import { DownloadOutlined } from '@ant-design/icons';
 
 const columnsOverview = [
   {
@@ -92,11 +93,11 @@ class ReportOverviewNetwork extends Component {
 
         <h3 className="report-section-headline">Downloads</h3>
         <div className="downloads-section">
-          <Button type="default" icon="download" onClick={this.downloadReport}>
+          <Button type="default" icon={<DownloadOutlined />} onClick={this.downloadReport}>
             Report
           </Button>
 
-          <Button type="default" icon="download" onClick={this.downloadPcap}>
+          <Button type="default" icon={<DownloadOutlined />} onClick={this.downloadPcap}>
             Pcap
           </Button>
         </div>

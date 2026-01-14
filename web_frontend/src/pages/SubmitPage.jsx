@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Button, Layout, Radio, Alert, Spin, InputNumber } from "antd";
+import { UploadOutlined } from '@ant-design/icons';
 
 const { Content, Header } = Layout;
 
@@ -211,7 +212,7 @@ class SubmitPage extends Component {
                 <div className="upload-form-input">
                   <Button
                     type="primary"
-                    icon="upload"
+                    icon={<UploadOutlined />}
                     onClick={this.handleUpload}
                     disabled={disabled}
                     className="upload-submit"

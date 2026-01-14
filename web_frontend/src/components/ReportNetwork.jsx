@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Icon, List, Table } from "antd";
+import { List, Table } from "antd";
+import { WarningOutlined } from '@ant-design/icons';
 import Flag from "react-world-flags";
 
 import { countryCodes } from "../data/countryCodes";
@@ -52,7 +53,7 @@ const columnsEndpoints = [
       }
       let code = countryCodes[record.country];
       return (
-        <div class="align-center">
+        <div className="align-center">
           <Flag code={code} height="16" className="endpoint-flag" />
         </div>
       );
@@ -63,7 +64,7 @@ const columnsEndpoints = [
     width: 150,
     render: (text, record) => {
       if (record.blacklisted) {
-        return <Icon type="warning" className="endpoint-blacklisted" />;
+        return <WarningOutlined className="endpoint-blacklisted" />;
       }
       return <span />;
     }

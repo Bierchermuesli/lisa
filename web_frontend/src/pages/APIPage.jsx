@@ -1,8 +1,7 @@
-import React, { Component } from "react";
+import React from "react";
 import { Layout, Collapse } from "antd";
 
 const { Content, Header } = Layout;
-const Panel = Collapse.Panel;
 
 const APIDataReturn = {
   taskID: {
@@ -282,34 +281,30 @@ const docsData = [
   }
 ];
 
-class APIPage extends Component {
-  render() {
-    const panelsHTML = docsData.map((data, i) => {
-      if (data.hasOwnProperty("inner")) {
-        return (
-          <Panel header={data.header} key={i}>
-            {data.inner}
-          </Panel>
-        );
-      }
+const APIPage = () => {
+  const items = docsData.map((data, i) => {
+    return {
+      key: i,
+      label: data.header,
+      children: data.inner || null,
+      showArrow: !!data.inner,
+      collapsible: data.inner ? 'header' : 'disabled'
+    };
+  });
 
-      return <Panel header={data.header} key={i} showArrow={false} />;
-    });
-
-    return (
-      <Layout style={{ marginLeft: 200 }}>
-        <Header className="header">
-          <h2 className="header-headline">API</h2>
-        </Header>
-        <Content className="page-content">
-          <div className="inner-page-content">
-            <h3 className="report-section-headline">Endpoints</h3>
-            <Collapse bordered={false}>{panelsHTML}</Collapse>
-          </div>
-        </Content>
-      </Layout>
-    );
-  }
-}
+  return (
+    <Layout style={{ marginLeft: 200 }}>
+      <Header className="header">
+        <h2 className="header-headline">API</h2>
+      </Header>
+      <Content className="page-content">
+        <div className="inner-page-content">
+          <h3 className="report-section-headline">Endpoints</h3>
+          <Collapse bordered={false} items={items} />
+        </div>
+      </Content>
+    </Layout>
+  );
+};
 
 export default APIPage;

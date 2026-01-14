@@ -12,6 +12,7 @@ images/*/**
 vpn/
 *.img
 *.qcow2
+data/*
 
 # Sphinx documentation
 docs/build/

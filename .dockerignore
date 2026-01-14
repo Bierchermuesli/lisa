@@ -32,3 +32,7 @@ README.md
 # big binaries
 images
 vpn
+
+# frontend
+web_frontend/node_modules
+web_frontend/build
