@@ -23,4 +23,22 @@ cat /etc/hosts
 echo "/etc/resolv.conf"
 cat /etc/resolv.conf
 
+echo "Sleeping 10 seconds to allow services to start..."
+sleep 10
+# Wait for MySQL
+echo "Connect to MySQL..."
+until python3 -c "import socket; s = socket.socket(socket.AF_INET, socket.SOCK_STREAM); s.settimeout(1); s.connect(('172.42.0.14', 3306)); s.close()"; do
+  echo "MySQL is unavailable - sleeping"
+  sleep 2
+done
+echo "MySQL is up!"
+
+# Wait for RabbitMQ
+echo "Connect to RabbitMQ..."
+until python3 -c "import socket; s = socket.socket(socket.AF_INET, socket.SOCK_STREAM); s.settimeout(1); s.connect(('172.42.0.13', 5672)); s.close()"; do
+  echo "RabbitMQ is unavailable - sleeping"
+  sleep 2
+done
+echo "RabbitMQ is up!"
+
 su - lisa -c "export LC_ALL=C.UTF-8; export LANG=C.UTF-8; celery -A lisa.web_api.tasks worker --loglevel=info --concurrency=1 -n lisa-worker@%h"

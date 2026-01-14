@@ -160,19 +160,20 @@ code {
   border: 0;
 }
 
-.tabs-report .ant-tabs-nav-scroll {
+.tabs-report .ant-tabs-nav {
   position: fixed;
-  width: calc(100% - 190px);
-  left: 190px;
-  top: 70px;
+  width: calc(100% - 200px);
+  left: 200px;
+  top: 80px;
   background: #fff;
   z-index: 5;
   padding-left: 5%;
+  margin: 0;
 }
 
 .tabs-report .ant-tabs-nav .ant-tabs-tab {
-  padding-left: 0;
-  padding-right: 0;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .inner-pane {

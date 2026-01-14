@@ -9,7 +9,7 @@ import logging.config
 from flask import jsonify, request, send_file
 from celery import uuid
 from celery.backends.database.models import Task
-from sqlalchemy import exc
+from sqlalchemy import exc, inspect
 from lisa.web_api import tasks
 from lisa.web_api.app import app, celery_app, Session, engine
 from lisa.web_api.responses import ErrorAPIResponse
@@ -53,7 +53,8 @@ def list_tasks(request_args, status=None):
             return jsonify(res), 400
 
     # unitialized db - no tasks
-    if not engine.dialect.has_table(engine, 'celery_taskmeta'):
+    inspector = inspect(engine)
+    if not inspector.has_table('celery_taskmeta'):
         return jsonify([])
 
     try:
@@ -113,7 +114,16 @@ def list_pending_tasks():
             return jsonify(res), 400
 
     i = celery_app.control.inspect()
-    pending = i.reserved()
+    reserved = i.reserved() or {}
+    active = i.active() or {}
+
+    # Merge active and reserved tasks
+    pending = active.copy()
+    for worker, tasks in reserved.items():
+        if worker in pending:
+            pending[worker].extend(tasks)
+        else:
+            pending[worker] = tasks
 
     return jsonify(pending)
 

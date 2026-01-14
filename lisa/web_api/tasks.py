@@ -59,6 +59,7 @@ def pcap_analysis(self, pcap_path, pretty=False):
 
     save_output(output, output_file, pretty)
 
+    log.info(f"Task {self.request.id} finished (pcap_analysis) for file {os.path.basename(pcap_path)}")
     return 'pcap'
 
 
@@ -83,4 +84,5 @@ def full_analysis(self, file_path, pretty=False, exec_time=20):
 
     save_output(master.output, output_file, pretty)
 
+    log.info(f"Task {self.request.id} finished (full_analysis) for file {os.path.basename(file_path)}")
     return 'binary'

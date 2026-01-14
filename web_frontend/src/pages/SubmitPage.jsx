@@ -106,6 +106,10 @@ class SubmitPage extends Component {
     });
   };
 
+  triggerFileInput = () => {
+    this.fileInput.click();
+  };
+
   render() {
     const { file, type, status, uploading, task_id } = this.state;
 
@@ -192,17 +196,22 @@ class SubmitPage extends Component {
               <div className="upload-form-row">
                 <p className="upload-form-label">
                   <label title="File">File</label>
-                  <span className="upload-file-name">{file.name}</span>
+                  <span className="upload-file-name">{file ? file.name : ""}</span>
                 </p>
                 <div className="upload-form-input">
-                  <label className="upload-file-input ant-btn ant-btn-default">
-                    <input
-                      type="file"
-                      className="hidden"
-                      onChange={this.handleInput}
-                    />
-                    <span className="upload-label-text">Select file</span>
-                  </label>
+                  <input
+                    type="file"
+                    className="hidden"
+                    onChange={this.handleInput}
+                    ref={input => (this.fileInput = input)}
+                  />
+                  <Button
+                    icon={<UploadOutlined />}
+                    onClick={this.triggerFileInput}
+                    className="upload-file-input"
+                  >
+                    Select file
+                  </Button>
                 </div>
               </div>
 
