@@ -91,6 +91,7 @@ class NetworkAnalyzer(AbstractSubAnalyzer):
         self._fin_count_local = 0
         self._endpoints = []
         self._dns_questions = set()
+        self._dns_answers = set()
         self._irc_messages = []
         self._http_requests = []
         self._telnet_data = []
@@ -208,6 +209,10 @@ class NetworkAnalyzer(AbstractSubAnalyzer):
                 # dns question
                 for question in packet.dns.questions:
                     self._dns_questions.add(question)
+            else:
+                # dns answer
+                for answer in packet.dns.answers:
+                    self._dns_answers.add(answer)
 
             # report anomaly
             if (
@@ -426,6 +431,20 @@ class NetworkAnalyzer(AbstractSubAnalyzer):
                     'type': qtype
                 }
             )
+
+        self._output['dns_answers'] = []
+
+        # answer structure
+        for answer in self._dns_answers:
+            parts = answer.split()
+            if len(parts) >= 3:
+                self._output['dns_answers'].append(
+                    {
+                        'name': parts[0],
+                        'type': parts[1],
+                        'value': " ".join(parts[2:])
+                    }
+                )
 
         self._output['http_requests'] = self._http_requests
 

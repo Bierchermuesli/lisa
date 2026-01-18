@@ -29,6 +29,22 @@ const columnsDNS = [
   }
 ];
 
+const columnsDNSAnswers = [
+  {
+    title: "Name",
+    dataIndex: "name"
+  },
+  {
+    title: "Type",
+    dataIndex: "type",
+    width: 200
+  },
+  {
+    title: "Value",
+    dataIndex: "value"
+  }
+];
+
 const columnsEndpoints = [
   {
     title: "IP",
@@ -96,6 +112,18 @@ class ReportNetwork extends Component {
         name: r.dns_questions[i].name,
         type: r.dns_questions[i].type
       });
+    }
+
+    this.dnsAnswers = [];
+    if (r.dns_answers) {
+      for (let i = 0; i < r.dns_answers.length; i++) {
+        this.dnsAnswers.push({
+          key: i,
+          name: r.dns_answers[i].name,
+          type: r.dns_answers[i].type,
+          value: r.dns_answers[i].value
+        });
+      }
     }
 
     this.endpoints = r.endpoints;
@@ -209,6 +237,14 @@ class ReportNetwork extends Component {
         <Table
           columns={columnsDNS}
           dataSource={this.dnsQuestions}
+          pagination={pagination}
+        />
+
+        <h3 className="report-section-headline">DNS answers</h3>
+
+        <Table
+          columns={columnsDNSAnswers}
+          dataSource={this.dnsAnswers}
           pagination={pagination}
         />
 
