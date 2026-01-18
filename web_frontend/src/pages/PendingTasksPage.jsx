@@ -12,16 +12,20 @@ const columnsTasks = [
   },
   {
     title: "File",
-    render: (text, record) => (
-      <span>
-        {record.args
+    render: (text, record) => {
+      let filename = "Unknown";
+      if (Array.isArray(record.args) && record.args.length > 0) {
+        filename = record.args[0].split("/").pop();
+      } else if (typeof record.args === "string") {
+        filename = record.args
           .split("/")
           .pop()
           .split(",")
           .slice(0, -1)[0]
-          .slice(0, -1)}
-      </span>
-    )
+          .slice(0, -1);
+      }
+      return <span>{filename}</span>;
+    }
   }
 ];
 
